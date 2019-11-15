@@ -70,10 +70,10 @@ __rvm_detect_system()
         _system_arch="$( dpkg --print-architecture )"
       elif
         [[ -f /etc/system-release ]] &&
-        GREP_OPTIONS="" \grep "Amazon Linux AMI" /etc/system-release >/dev/null
+        GREP_OPTIONS="" \grep "Amazon Linux" /etc/system-release >/dev/null
       then
         _system_name="Amazon"
-        _system_version="$(GREP_OPTIONS="" \grep -Eo '[0-9\.]+' /etc/system-release | \awk -F. '{print $1"."$2}')"
+        _system_version="$(GREP_OPTIONS="" \grep -Eo '[0-9\.]+' /etc/system-release | \awk -F. '{if ($2!="") {print $1"."$2} else {print $1}}')"
       elif
         [[ -f /etc/sabayon-release ]]
       then
